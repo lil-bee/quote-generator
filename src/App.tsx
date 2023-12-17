@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { Button, Text } from "@chakra-ui/react";
-
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
 interface Quote {
 	quoteText: string;
 	quoteAuthor: string;
 	quoteGenre: string;
+}
+
+interface QuoteResponse {
+	data: Quote[];
 }
 
 function App() {
@@ -17,16 +22,27 @@ function App() {
 	}, []);
 
 	const fetchQuote = async () => {
-		console.log("hayu");
 		try {
-			const response = await axios.get<Quote>(
+			const { data }: { data: QuoteResponse } = await axios.get<QuoteResponse>(
 				"https://quote-garden.onrender.com/api/v3/quotes/random"
 			);
-			setQuote(response.data.data[0]);
+			console.log(data);
+			return {
+				quoteAuthor: data.data[0].quoteAuthor,
+				quoteGenre: data.data[0].quoteGenre,
+				quoteText: data.data[0].quoteText,
+			};
 		} catch (error) {
 			console.error("Error fetching quote: ", error);
 		}
 	};
+
+	const { data } = useQuery({
+		queryKey: ["quotes-random"],
+		queryFn: fetchQuote,
+	});
+
+	console.log(data);
 
 	return (
 		<>
