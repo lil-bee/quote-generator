@@ -13,6 +13,14 @@ interface QuoteResponse {
 	data: Quote[];
 }
 
+interface OrangResponse {
+	data: Orang[];
+}
+
+interface Orang {
+	nama: string;
+}
+
 function App() {
 	const [quote, setQuote] = useState<Quote | null>(null);
 	console.log(quote);
@@ -37,7 +45,24 @@ function App() {
 		}
 	};
 
-	const { data } = useQuery({
+	const fetchOrang = async (orang: string) => {
+		try {
+			const { data }: { data: OrangResponse } = await axios.get(
+				"https://quote-garden.onrender.com/api/v3/quotes",
+				{
+					params: {
+						author: orang,
+					},
+				}
+			);
+
+			console.log(data);
+		} catch (error) {
+			console.error("error fectch orang");
+		}
+	};
+
+	const { data, refetch } = useQuery({
 		queryKey: ["quotes-random"],
 		queryFn: fetchQuote,
 	});
@@ -47,16 +72,20 @@ function App() {
 	return (
 		<>
 			<div>
-				{quote ? (
+				{data ? (
 					<>
-						<Text>{quote.quoteText}</Text>
-						<Text>{quote.quoteAuthor}</Text>
-						<Text>{quote.quoteGenre}</Text>
+						<Text>{data?.quoteText}</Text>
+						{data && (
+							<Text onClick={() => fetchOrang(data.quoteAuthor)}>
+								{data?.quoteAuthor}
+							</Text>
+						)}
+						<Text>{data?.quoteGenre}</Text>
 					</>
 				) : (
 					<Text>Loading...</Text>
 				)}
-				<Button onClick={fetchQuote}>Get New Quote</Button>
+				<Button onClick={() => refetch()}>Get New Quote</Button>
 			</div>
 		</>
 	);
