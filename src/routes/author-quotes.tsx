@@ -43,6 +43,7 @@ function AuthorQuotes() {
 		queryKey: ["author-quotes"],
 		queryFn: () => fetchOrang(author),
 	});
+
 	return (
 		<>
 			{data ? (
