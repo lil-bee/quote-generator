@@ -1,10 +1,19 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import {
+	Box,
+	Button,
+	Center,
+	Flex,
+	Heading,
+	Stack,
+	Skeleton,
+} from "@chakra-ui/react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import axios from "axios";
 import Quote from "../components/Quote";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
+import Footer from "../components/Footer";
 
 interface OrangResponse {
 	data: Orang[];
@@ -23,6 +32,7 @@ type AuthorParam = {
 function AuthorQuotes() {
 	const { author } = useParams<AuthorParam>();
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 	const fetchOrang = async (orang: string | undefined) => {
 		try {
 			const { data }: { data: OrangResponse } = await axios.get<OrangResponse>(
@@ -43,15 +53,28 @@ function AuthorQuotes() {
 		}
 	};
 
-	const { data } = useQuery({
+	const { data, refetch, isLoading } = useQuery({
 		queryKey: [`author-quotes-${author}`],
 		queryFn: () => fetchOrang(author),
 	});
 
 	return (
 		<>
-			{data ? (
-				<>
+			<Box
+				display="flex"
+				flexDir="column"
+				alignItems="center"
+				gap="47px"
+				p={2}
+				justifyContent="center"
+			>
+				<Box
+					w="100%"
+					overflow="hidden"
+					px="96px"
+					display="flex"
+					textAlign="left"
+				>
 					<Button
 						variant="outline"
 						border="none"
@@ -60,25 +83,47 @@ function AuthorQuotes() {
 					>
 						back
 					</Button>
-					<Box alignSelf="center" maxW="714px">
-						<Heading>{author}</Heading>
-						<Flex
-							gap="140px"
-							direction="column"
-							align="center"
-							justify="center"
-						>
-							{data?.map((x, i) => (
-								<>
-									<Quote quoteText={x.text} key={i} />
-								</>
-							))}
-						</Flex>
-					</Box>
-				</>
-			) : (
-				<Text>is loading...</Text>
-			)}
+				</Box>
+				<Center
+					overflowY="hidden"
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
+				>
+					{data && !isLoading ? (
+						<>
+							<Box alignSelf="center" maxW="714px">
+								<Heading mb="100px" fontSize="36px">
+									{author}
+								</Heading>
+								<Flex
+									gap="140px"
+									direction="column"
+									align="self-start"
+									justify="center"
+								>
+									{data?.map((x, i) => (
+										<>
+											<Quote quoteText={x.text} key={i} />
+										</>
+									))}
+								</Flex>
+							</Box>
+						</>
+					) : (
+						<>
+							<Stack w="600px">
+								<Skeleton height="200px" />
+
+								<Skeleton height="200px" />
+
+								<Skeleton height="200px" />
+							</Stack>
+						</>
+					)}
+				</Center>
+			</Box>
+			<Footer />
 		</>
 	);
 }

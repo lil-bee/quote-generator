@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import { Button, Skeleton, Text, Stack, Box, Center } from "@chakra-ui/react";
-import axios from "axios";
+import { ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import { ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
+import axios from "axios";
 import Quote from "../components/Quote";
+import Footer from "../components/Footer";
 
 interface Quotes {
 	quoteText: string;
@@ -47,7 +47,7 @@ function Home() {
 				overflowY="hidden"
 				display="flex"
 				flexDir="column"
-				alignItems="stretch"
+				alignItems="center"
 				gap="100px"
 				p={2}
 				justifyContent="flex-start"
@@ -90,15 +90,24 @@ function Home() {
 								</Box>
 							</>
 						) : (
-							<Stack w="300px">
-								<Skeleton height="20px" />
-								<Skeleton height="20px" />
-								<Skeleton height="20px" />
-							</Stack>
+							<>
+								<Stack w="600px">
+									<Skeleton height="40px" />
+									<Skeleton height="40px" />
+									<Skeleton height="40px" />
+									<Skeleton height="40px" />
+									<Skeleton height="40px" />
+								</Stack>
+								<Stack mt="59px" w="200px">
+									<Skeleton height="20px" />
+									<Skeleton height="20px" />
+								</Stack>
+							</>
 						)}
 					</Box>
 				</Center>
 			</Box>
+			<Footer />
 		</>
 	);
 }
