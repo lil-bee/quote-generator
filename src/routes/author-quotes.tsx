@@ -71,7 +71,7 @@ function AuthorQuotes() {
 				<Box
 					w="100%"
 					overflow="hidden"
-					px="96px"
+					px={{ base: "20px", md: "96px" }}
 					display="flex"
 					textAlign="left"
 				>
@@ -92,12 +92,12 @@ function AuthorQuotes() {
 				>
 					{data && !isLoading ? (
 						<>
-							<Box alignSelf="center" maxW="714px">
-								<Heading mb="100px" fontSize="36px">
+							<Box alignSelf="center" maxW={{ base: "380px", md: "714px" }}>
+								<Heading mb={{ base: "50px", md: "100px" }} fontSize="36px">
 									{author}
 								</Heading>
 								<Flex
-									gap="140px"
+									gap={{ base: "70px", md: "140px" }}
 									direction="column"
 									align="self-start"
 									justify="center"

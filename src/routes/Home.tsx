@@ -63,7 +63,12 @@ function Home() {
 				p={2}
 				justifyContent="flex-start"
 			>
-				<Box w="100%" overflow="hidden" pr="96px" textAlign="right">
+				<Box
+					w="100%"
+					overflow="hidden"
+					pr={{ base: "20px", md: "96px" }}
+					textAlign="right"
+				>
 					<Button
 						variant="outline"
 						rightIcon={<RepeatIcon />}
@@ -78,7 +83,7 @@ function Home() {
 					alignItems="center"
 					justifyContent="center"
 				>
-					<Box maxW="714px">
+					<Box maxW={{ base: "380px", md: "714px" }}>
 						{data && !isLoading ? (
 							<>
 								<Box gap="59px" display="flex" flexDir="column">

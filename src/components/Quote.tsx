@@ -6,11 +6,16 @@ interface Quote {
 }
 function Quote({ quoteText }: Quote) {
 	return (
-		<Box gap="99px" display="flex" justifyContent="center" flexDir="row">
+		<Box
+			gap={{ base: "25px", sm: "50px", md: "99px" }}
+			display="flex"
+			justifyContent="center"
+			flexDir="row"
+		>
 			<Box>
 				<Divider variant="thick" orientation="vertical" />
 			</Box>
-			<Text fontSize="36px">"{quoteText}"</Text>
+			<Text fontSize={{ base: "24px", md: "36px" }}>"{quoteText}"</Text>
 		</Box>
 	);
 }
