@@ -7,7 +7,7 @@ import {
 	Stack,
 	Skeleton,
 } from "@chakra-ui/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import axios from "axios";
 import Quote from "../components/Quote";
