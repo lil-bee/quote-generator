@@ -1,4 +1,12 @@
-import { Button, Skeleton, Text, Stack, Box, Center } from "@chakra-ui/react";
+import {
+	Button,
+	Skeleton,
+	Text,
+	Stack,
+	Box,
+	Center,
+	Divider,
+} from "@chakra-ui/react";
 import { ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
@@ -35,11 +43,14 @@ function Home() {
 		}
 	};
 
-	const { data, refetch, isLoading } = useQuery({
+	const { data, refetch, status, isLoading } = useQuery({
 		queryKey: ["quotes-random"],
 		queryFn: fetchQuote,
 		staleTime: Infinity,
 	});
+
+	console.log(status);
+	console.log(data);
 
 	return (
 		<>
@@ -55,7 +66,6 @@ function Home() {
 				<Box w="100%" overflow="hidden" pr="96px" textAlign="right">
 					<Button
 						variant="outline"
-						border="0px"
 						rightIcon={<RepeatIcon />}
 						onClick={() => refetch()}
 					>
