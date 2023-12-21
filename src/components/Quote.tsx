@@ -1,8 +1,6 @@
 import { Text, Box, Divider } from "@chakra-ui/react";
 interface Quote {
 	quoteText?: string;
-	quoteAuthor?: string | "";
-	quoteGenre?: string;
 }
 function Quote({ quoteText }: Quote) {
 	return (
@@ -15,7 +13,9 @@ function Quote({ quoteText }: Quote) {
 			<Box>
 				<Divider variant="thick" orientation="vertical" />
 			</Box>
-			<Text fontSize={{ base: "24px", md: "36px" }}>"{quoteText}"</Text>
+			<Text fontWeight="500" fontSize={{ base: "24px", md: "36px" }}>
+				"{quoteText}"
+			</Text>
 		</Box>
 	);
 }

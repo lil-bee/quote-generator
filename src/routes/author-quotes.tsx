@@ -32,7 +32,6 @@ type AuthorParam = {
 function AuthorQuotes() {
 	const { author } = useParams<AuthorParam>();
 	const navigate = useNavigate();
-	const queryClient = useQueryClient();
 	const fetchOrang = async (orang: string | undefined) => {
 		try {
 			const { data }: { data: OrangResponse } = await axios.get<OrangResponse>(
@@ -53,7 +52,7 @@ function AuthorQuotes() {
 		}
 	};
 
-	const { data, refetch, isLoading } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: [`author-quotes-${author}`],
 		queryFn: () => fetchOrang(author),
 	});
@@ -122,8 +121,8 @@ function AuthorQuotes() {
 						</>
 					)}
 				</Center>
+				<Footer />
 			</Box>
-			<Footer />
 		</>
 	);
 }

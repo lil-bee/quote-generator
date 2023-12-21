@@ -1,12 +1,4 @@
-import {
-	Button,
-	Skeleton,
-	Text,
-	Stack,
-	Box,
-	Center,
-	Divider,
-} from "@chakra-ui/react";
+import { Button, Skeleton, Text, Stack, Box, Center } from "@chakra-ui/react";
 import { ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
@@ -43,14 +35,11 @@ function Home() {
 		}
 	};
 
-	const { data, refetch, status, isLoading } = useQuery({
+	const { data, refetch, isLoading } = useQuery({
 		queryKey: ["quotes-random"],
 		queryFn: fetchQuote,
 		staleTime: Infinity,
 	});
-
-	console.log(status);
-	console.log(data);
 
 	return (
 		<>
@@ -60,6 +49,7 @@ function Home() {
 				flexDir="column"
 				alignItems="center"
 				gap="100px"
+				minH="100vh"
 				p={2}
 				justifyContent="flex-start"
 			>
@@ -78,10 +68,13 @@ function Home() {
 					</Button>
 				</Box>
 				<Center
+					flex="1"
 					overflowY="hidden"
+					h="max-content"
 					display="flex"
+					flexDir="column"
 					alignItems="center"
-					justifyContent="center"
+					justifyContent="space-between"
 				>
 					<Box maxW={{ base: "380px", md: "714px" }}>
 						{data && !isLoading ? (
@@ -97,8 +90,12 @@ function Home() {
 										_hover={{ color: "white", bg: "black", cursor: "pointer" }}
 									>
 										<Box py="50px" pl="29px">
-											<Text fontSize="24px">{data?.quoteAuthor}</Text>
-											<Text fontSize="14px">{data?.quoteGenre}</Text>
+											<Text fontWeight="700" fontSize="24px">
+												{data?.quoteAuthor}
+											</Text>
+											<Text fontWeight="500" fontSize="14px">
+												{data?.quoteGenre}
+											</Text>
 										</Box>
 										<ArrowForwardIcon mr="29px" color="white" />
 									</Box>
@@ -121,8 +118,8 @@ function Home() {
 						)}
 					</Box>
 				</Center>
+				<Footer />
 			</Box>
-			<Footer />
 		</>
 	);
 }

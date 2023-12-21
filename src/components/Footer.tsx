@@ -2,12 +2,13 @@ import { Box, Link, Text } from "@chakra-ui/react";
 function Footer() {
 	return (
 		<Box
+			position="unset"
+			bottom={0}
 			display="flex"
 			justifyContent="center"
 			alignItems="center"
-			position="relative"
 		>
-			<Text fontSize="sm" color="gray.500" mb="10px" mt="16">
+			<Text fontSize="sm" color="gray.500">
 				created by{" "}
 				<Link
 					fontWeight="semibold"
