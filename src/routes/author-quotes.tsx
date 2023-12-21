@@ -1,7 +1,10 @@
-import { Divider, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import axios from "axios";
+import Quote from "../components/Quote";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router";
 
 interface OrangResponse {
 	data: Orang[];
@@ -19,6 +22,7 @@ type AuthorParam = {
 
 function AuthorQuotes() {
 	const { author } = useParams<AuthorParam>();
+	const navigate = useNavigate();
 	const fetchOrang = async (orang: string | undefined) => {
 		try {
 			const { data }: { data: OrangResponse } = await axios.get<OrangResponse>(
@@ -40,7 +44,7 @@ function AuthorQuotes() {
 	};
 
 	const { data } = useQuery({
-		queryKey: ["author-quotes"],
+		queryKey: [`author-quotes-${author}`],
 		queryFn: () => fetchOrang(author),
 	});
 
@@ -48,13 +52,29 @@ function AuthorQuotes() {
 		<>
 			{data ? (
 				<>
-					<Heading>{author}</Heading>
-					{data?.map((x, i) => (
-						<>
-							<Text>{x.text}</Text>
-							<Divider />
-						</>
-					))}
+					<Button
+						variant="outline"
+						border="none"
+						onClick={() => navigate("/")}
+						leftIcon={<ArrowBackIcon />}
+					>
+						back
+					</Button>
+					<Box alignSelf="center" maxW="714px">
+						<Heading>{author}</Heading>
+						<Flex
+							gap="140px"
+							direction="column"
+							align="center"
+							justify="center"
+						>
+							{data?.map((x, i) => (
+								<>
+									<Quote quoteText={x.text} key={i} />
+								</>
+							))}
+						</Flex>
+					</Box>
 				</>
 			) : (
 				<Text>is loading...</Text>

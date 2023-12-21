@@ -1,40 +1,23 @@
 import { useEffect, useState } from "react";
-import {
-	Button,
-	Skeleton,
-	Text,
-	Stack,
-	Box,
-	Divider,
-	calc,
-	Center,
-} from "@chakra-ui/react";
+import { Button, Skeleton, Text, Stack, Box, Center } from "@chakra-ui/react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
+import Quote from "../components/Quote";
 
-interface Quote {
+interface Quotes {
 	quoteText: string;
 	quoteAuthor?: string | "";
 	quoteGenre: string;
 }
 
 interface QuoteResponse {
-	data: Quote[];
+	data: Quotes[];
 }
 
 function Home() {
-	const [quote, setQuote] = useState<Quote | null>(null);
-	console.log(quote);
-
-	//let slugify = require("slugify");
-
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		fetchQuote();
-	}, []);
 
 	const fetchQuote = async () => {
 		try {
@@ -61,12 +44,12 @@ function Home() {
 	return (
 		<>
 			<Box
-				h="100vh"
-				w="100%"
 				overflowY="hidden"
 				display="flex"
 				flexDir="column"
-				alignItems="center"
+				alignItems="stretch"
+				gap="100px"
+				p={2}
 				justifyContent="flex-start"
 			>
 				<Box w="100%" overflow="hidden" pr="96px" textAlign="right">
@@ -89,21 +72,7 @@ function Home() {
 						{data && !isLoading ? (
 							<>
 								<Box gap="59px" display="flex" flexDir="column">
-									<Box
-										gap="99px"
-										display="flex"
-										justifyContent="center"
-										flexDir="row"
-									>
-										<Box>
-											<Divider
-												borderStartWidth="8px"
-												borderColor="#F7DF94"
-												orientation="vertical"
-											/>
-										</Box>
-										<Text fontSize="36px">"{data?.quoteText}"</Text>
-									</Box>
+									<Quote quoteText={data.quoteText} />
 									<Box
 										onClick={() => navigate(`/${data.quoteAuthor}`)}
 										display="flex"
