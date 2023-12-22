@@ -54,6 +54,7 @@ Introduce your projects by taking a screenshot or a gif. Try to tell visitors a 
 
 - [React](https://react.dev/)
 - [Chakra UI](https://chakra-ui.com/)
+- [React Query](https://tanstack.com/query/latest/docs/react/overview)
 
 ## Features
 
@@ -82,6 +83,5 @@ $ npm run dev
 
 <!-- This section should list any articles or add-ons/plugins that helps you to complete the project. This is optional but it will help you in the future. For example: -->
 
-- [Tabs Component in Chakra UI](https://chakra-ui.com/docs/components/tabs/usage)
 - [React Query with Typescript](https://tanstack.com/query/latest/docs/react/typescript)
 - [Theming component](https://chakra-ui.com/docs/components/divider/theming)
